@@ -24,8 +24,15 @@ const App = () => {
   return (
     <>
       <Title />
-      <NewPost input={input} setInput={setInput} reply={reply} setReply={setReply} id={id} setId={setId} depth={depth}/>
-      <Reply input={input} setInput={setInput} reply={reply}  setReply={setReply} id={id} setId={setId}/>
+      <NewPost input={input} setInput={setInput} reply={reply} setReply={setReply} id={id} setId={setId} depth={depth} setDepth={setDepth}/>
+      {input.map(({n,t,d,i,r}) => (
+        <div>
+          <Reply input={input} setInput={setInput} n={n} t={t} depth={d} setId={setId} id={i} r={r}/>
+        </div>
+      ))}
+
+
+      {/* <Reply input={input} setInput={setInput} reply={reply}  setReply={setReply} id={id} setId={setId} depth={3} setDepth={setDepth}/> */}
     </>
   )
 }

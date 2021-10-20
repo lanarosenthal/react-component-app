@@ -7,7 +7,7 @@ import Reply from './Reply'
 
 
 // takes in a name and a depth
-const NewPost = ({input, setInput, reply, setReply, id, depth, setId}) => {
+const NewPost = ({input, setInput, id, depth, setId}) => {
   // const { n, t, d,i,r,c } = input
   const [name, setName] = useState('')
   const [text, setText] = useState('')
@@ -18,7 +18,7 @@ const NewPost = ({input, setInput, reply, setReply, id, depth, setId}) => {
     setName('')
     setText('')
     setId(id+1)
-    setReply(0)
+    // setReply(0)
   }
 
   const buttonDisabled = () => {
