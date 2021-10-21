@@ -1,50 +1,88 @@
-import React,{useState} from 'react'
-import NewPost from './NewPost'
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import '../App.css';
 
+const Reply = ({
+  input, n, t, setInput, id, setId, depth,
+}) => {
+  const [nam, setNam] = useState('');
+  const [replies, setReplies] = useState([]);
+  const [tex, setTex] = useState('');
+  const [clicked, setClicked] = useState(false);
 
-const Reply = ({input, n, t, setInput, id, setId, depth}) => {
-  // console.log(input)
-  // const { name, text } = input
-  const [name, setName] = useState('')
-  const [replies, setReplies] = useState([])
-  const [text, setText] = useState('')
-  const [clicked, setClicked] = useState(false)
+  const buttonDisabled = () => !(tex.length !== 0 && nam.length !== 0);
 
+  const replyDisabled = () => depth <= 1;
+  const handleComment = () => {
+    setClicked(true);
+    setId(id + 1);
+  };
 
+  const addReply = () => {
+    setReplies((replies) => [...replies, {
+      n: nam, t: tex, d: depth, i: id, r: [],
+    }]),
+    setClicked(false);
+  };
 
-  const handleComment = () =>{
-    // setName(name),
-    // setDepth(depth-1),
-    setClicked(true),
-    setId(id+1)
-  }
+  return (
+    <Card>
+      <div>
+        Name:
+        {n}
+      </div>
+      <div>
+        Post:
+        {t}
+      </div>
+      <input type="number" onChange={(e) => e.target.value} />
+      {replies.map(({
+        n, t, d, i, r,
+      }) => (
+        <div key="reply-{item}">
+          <Reply
+            input={input}
+            setInput={setInput}
+            n={n}
+            t={t}
+            id={id + 1}
+            setId={setId}
+            depth={d - 1}
+          />
+        </div>
+      ))}
+      <Button
+        variant="primary"
+        type="submit"
+        disabled={replyDisabled()}
+        onClick={handleComment}
+      >
+        {' '}
+        Reply
+      </Button>
 
-  const addReply = () =>{
-    setReplies(replies=>[...replies, {n:n, t:t, d:depth, i:id, r:[]}]),
-    // setInput(input=>[...input, {n:prevName, t:prevText, d:depth, i:id, r:replies}])
-    setClicked(false)
-  }
+      {(clicked)
+        ? (
+          <Form>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="name" placeholder="Enter name" onChange={(e) => setNam(e.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Post</Form.Label>
+              <Form.Control type="post" placeholder="Post" onChange={(e) => setTex(e.target.value)} />
+            </Form.Group>
+            <Button variant="primary" type="submit" disabled={buttonDisabled()} onClick={addReply}>
+              Submit
+            </Button>
+          </Form>
+        )
+        : <br />}
+    </Card>
+  );
+};
 
-  
-  return(<>
-    <div>Name: {n}</div>
-    <div>Post: {t}</div>
-    <div>Depth:{depth}</div>
-    <div>ID:{id}</div>
-    <input type="number"
-            onChange={e => e.target.value} />
-    <button type="submit" onClick={handleComment}>Reply</button>
-    {(clicked) ? <><input onChange={e => setName(e.target.value)} />
-                        <input onChange={e => setText(e.target.value)} />
-                        <button type="submit" onClick={addReply}>Submit</button></>: <br></br>}
-    {replies.map(({ n,t,d,i,r}) => (
-    <div>
-      { 
-      <Reply input={input} setInput={setInput} n={name} t={text} id={i} setId={setId} depth={d - 1}></Reply> }
-    </div>
-    ))} 
-
-  </>)
-}
-
-export default Reply
+export default Reply;
