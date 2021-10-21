@@ -35,7 +35,7 @@ const App = () => {
       { input.map(({
         n, t, d, i, r,
       }) => (
-        <div key="{i}">
+        <div key={`${i}`}>
           <Reply
             input={input}
             setInput={setInput}

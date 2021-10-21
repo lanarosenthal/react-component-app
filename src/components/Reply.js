@@ -8,14 +8,16 @@ import '../App.css';
 const Reply = ({
   input, n, t, setInput, id, setId, depth,
 }) => {
-  const [nam, setNam] = useState('');
+  const [name, setName] = useState('');
+
   const [replies, setReplies] = useState([]);
-  const [tex, setTex] = useState('');
+  const [text, setText] = useState('');
   const [clicked, setClicked] = useState(false);
 
-  const buttonDisabled = () => !(tex.length !== 0 && nam.length !== 0);
+  const buttonDisabled = () => !(text.length !== 0 && name.length !== 0);
 
   const replyDisabled = () => depth <= 1;
+
   const handleComment = () => {
     setClicked(true);
     setId(id + 1);
@@ -23,26 +25,27 @@ const Reply = ({
 
   const addReply = () => {
     setReplies((replies) => [...replies, {
-      n: nam, t: tex, d: depth, i: id, r: [],
+      n: name, t: text, d: depth, i: id, r: [],
     }]),
     setClicked(false);
+    setName('');
+    setText('');
   };
 
   return (
     <Card>
-      <div>
-        Name:
+      <div className="replyContents name">
         {n}
       </div>
-      <div>
-        Post:
+      <div className="replyContents text">
+      &nbsp;&nbsp; &nbsp; &nbsp;
         {t}
       </div>
-      <input type="number" onChange={(e) => e.target.value} />
+      <input className="replyContents voter" type="number" placeholder="vote" onChange={(e) => e.target.value} />
       {replies.map(({
         n, t, d, i, r,
       }) => (
-        <div key="reply-{item}">
+        <div className="replyContents" key={`reply-${Math.random()}`}>
           <Reply
             input={input}
             setInput={setInput}
@@ -55,25 +58,25 @@ const Reply = ({
         </div>
       ))}
       <Button
+        className="replyContents"
         variant="primary"
         type="submit"
         disabled={replyDisabled()}
         onClick={handleComment}
       >
-        {' '}
         Reply
       </Button>
 
       {(clicked)
         ? (
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form className="formContents">
+            <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="name" placeholder="Enter name" onChange={(e) => setNam(e.target.value)} />
+              <Form.Control type="name" placeholder="Enter name" onChange={(e) => setName(e.target.value)} />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3">
               <Form.Label>Post</Form.Label>
-              <Form.Control type="post" placeholder="Post" onChange={(e) => setTex(e.target.value)} />
+              <Form.Control type="post" placeholder="Post" onChange={(e) => setText(e.target.value)} />
             </Form.Group>
             <Button variant="primary" type="submit" disabled={buttonDisabled()} onClick={addReply}>
               Submit

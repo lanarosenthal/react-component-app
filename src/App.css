@@ -3,10 +3,8 @@
 } */
 
 .Card {
-  margin-left: 100px;
-  margin-right: 100px;
-  margin-bottom: 100px;
-  background-color: gray;
+  margin: auto;
+  width: 60%;
 }
 /* 
 .Form {
@@ -18,14 +16,44 @@
   margin-left: 450px;
   margin-right: 450px;
 } */
-
+.title {
+  text-align: center;
+}
 .Title {
+  margin: auto;
   margin-top: 100px;
-  margin-left: 700px;
-  /* margin-right: 100px; */
   margin-bottom: 100px;
+  width: 50%;
 }
 
+.formContents {
+  margin: auto;
+  width: 80%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.replyContents {
+  margin: auto;
+  width: 80%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.voter {
+  margin: auto;
+  width: 30%;
+  border-color: transparent;
+  border-bottom: 2px solid #1c87c9;
+}
+
+.name {
+  color: blue;
+}
+
+.text {
+  size: 18pt;
+}
 .Button {
   margin-top: 100px;
 
